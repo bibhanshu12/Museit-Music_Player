@@ -14,6 +14,7 @@
     import android.os.Environment;
     import android.util.Log;
     import android.view.View;
+    import android.widget.AdapterView;
     import android.widget.ArrayAdapter;
     import android.widget.Button;
     import android.widget.ListView;
@@ -72,10 +73,30 @@
                             fetchAndDisplaySongs();
                         }
                     });
-
-
                     // Display songs in the ListView
                     fetchAndDisplaySongs();
+
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            // Get the clicked song title
+                            String currentSongTitle = listView.getItemAtPosition(position).toString();
+
+                            // Retrieve the file path of the clicked song from the database using the song title
+                            String currentSongFilePath = databaseHelper.getFilepathByTitle(currentSongTitle);
+
+                            // Start the MusIt_Player_Screen activity
+                            Intent intent = new Intent(MainActivity.this, MusIt_Player_Screen.class);
+                            intent.putExtra("currentSongTitle", currentSongTitle);
+                            intent.putExtra("currentSongFilePath", currentSongFilePath);
+                            intent.putExtra("position",position);
+                            startActivity(intent);
+                        }
+                    });
+
+
+
+
 
 
 

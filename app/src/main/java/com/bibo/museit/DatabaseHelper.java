@@ -65,17 +65,28 @@
 
         }
 
-        public boolean updateData(String id, String title,String filePath) {
-            SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(COL_TITLE, title);
-            contentValues.put(COL_FILE_PATH, filePath);
-            int rowsAffected = sqLiteDatabase.update(TABLE_NAME, contentValues, COL_ID + " = ?", new String[]{id});
-            return rowsAffected > 0;
-        }
+
 
         public int deleteData(String id) {
             SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
             return sqLiteDatabase.delete(TABLE_NAME, COL_ID + " = ?", new String[]{id});
         }
+
+
+
+        public String getFilepathByTitle(String title) {
+            SQLiteDatabase db = this.getReadableDatabase();
+            String[] projection = {COL_FILE_PATH};
+            String selection = COL_TITLE + " = ?";
+            String[] selectionArgs = {title};
+            Cursor cursor = db.query(TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+            String filePath = null;
+            if (cursor != null && cursor.moveToFirst()) {
+                int filePathIndex = cursor.getColumnIndex(COL_FILE_PATH); // Retrieve the index of the file path column
+                filePath = cursor.getString(filePathIndex); // Retrieve the file path using the index
+                cursor.close();
+            }
+            return filePath;
+        }
+
     }
