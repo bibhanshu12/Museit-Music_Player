@@ -89,4 +89,26 @@
             return filePath;
         }
 
+        // Method to retrieve file path and title from the database based on position or ID
+        public Cursor getFileDetailsByPosition(int position) {
+            SQLiteDatabase db = this.getReadableDatabase();
+            String[] projection = {COL_TITLE, COL_FILE_PATH};
+            String orderBy = COL_ID + " ASC"; // Assuming the IDs represent the position in the database
+            String limit = position + ",1"; // Fetch only one record from the specified position
+            return db.query(TABLE_NAME, projection, null, null, null, null, orderBy, limit);
+        }
+
+        // Method to fetch the maximum size of the database
+        public int getMaxDatabaseSize() {
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_NAME, null);
+            int maxSize = 0;
+            if (cursor != null && cursor.moveToFirst()) {
+                maxSize = cursor.getInt(0);
+                cursor.close();
+            }
+            return maxSize;
+        }
+
+
     }
