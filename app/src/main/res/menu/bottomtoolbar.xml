@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Songs"
+        android:id="@+id/Songslist"
+        android:icon="@drawable/music"
+
+        />
+    <item android:title="Middleitem"
+        android:visible="false"
+        android:id="@+id/invisible"
+
+        />
+
+
+    <item android:title="Profile"
+        android:id="@+id/Profile"
+        android:icon="@drawable/baseline_accessibility_new_24"
+
+        />
+</menu>

@@ -97,7 +97,7 @@
                 android:id="@+id/changeleft"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="15dp"
                 android:background="@drawable/previous"
                 android:textSize="6dp" />
 

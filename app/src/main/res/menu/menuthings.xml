@@ -7,7 +7,7 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_favorites"
+        android:id="@+id/action_favorite"
         android:title="Favorites"
         app:showAsAction="never" />
 

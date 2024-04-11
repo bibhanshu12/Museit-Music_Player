@@ -1,5 +1,6 @@
     package com.bibo.museit;
 
+    import androidx.annotation.NonNull;
     import androidx.annotation.RequiresApi;
     import androidx.appcompat.app.AlertDialog;
     import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,7 @@
     import android.os.Bundle;
     import android.os.Environment;
     import android.util.Log;
+    import android.view.MenuItem;
     import android.view.View;
     import android.widget.AdapterView;
     import android.widget.ArrayAdapter;
@@ -21,6 +23,7 @@
     import android.widget.TextView;
     import android.widget.Toast;
 
+    import com.google.android.material.floatingactionbutton.FloatingActionButton;
     import com.karumi.dexter.Dexter;
     import com.karumi.dexter.DexterBuilder;
     import com.karumi.dexter.PermissionToken;
@@ -38,6 +41,8 @@
         AppCompatButton appCompatButton;
     //    RecyclerView recyclerView;
         ListView listView;
+        FloatingActionButton fabbuttion;
+
         Button getsongs;
 
         DatabaseHelper databaseHelper;
@@ -52,6 +57,10 @@
             textView=findViewById(R.id.name);
             getsongs=findViewById(R.id.getsongs);
             databaseHelper = new DatabaseHelper(this);
+//            fabbuttion=findViewById(R.id.fab_button);
+
+
+
             String name="",mail="";
             Intent intent=getIntent();
             name=intent.getStringExtra("Name");
@@ -67,14 +76,19 @@
                     getsongs.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+
+                            Toast.makeText(MainActivity.this, "Searching songs , please have patients!", Toast.LENGTH_LONG).show();
                             // Fetch songs from the internal storage directory accessible with READ_MEDIA_AUDIO permission
                             File internalStorageDirectory = getFilesDir(); // Use getFilesDir() to get the internal storage directory of the app
                             fetchAndSaveSongs(Environment.getExternalStorageDirectory(), databaseHelper);
                             fetchAndDisplaySongs();
+
+
                         }
                     });
                     // Display songs in the ListView
                     fetchAndDisplaySongs();
+
 
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
@@ -132,6 +146,9 @@
 
 
 
+
+
+
     //        button.setOnClickListener(new View.OnClickListener() {
     //            @Override
     //            public void onClick(View v) {
@@ -144,6 +161,11 @@
 
 
         }
+
+
+
+
+
         // Define the FetchSongs method to recursively fetch and store MP3 files in the database
         public void fetchAndSaveSongs(File directory, DatabaseHelper dbHelper) {
             if (directory.exists() && directory.isDirectory()) {
